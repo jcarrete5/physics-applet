@@ -1,2 +1,2 @@
 # physics-applet
-Physics simulation project
+A physics applet that simulates the concept of buoyancy.
