@@ -6,11 +6,15 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<style>
-			footer {
-				text-align: center;
+			body {
+				font-family: sans-serif;
 			}
 
 			#sim {
+				display: inline-block;
+			}
+
+			header, main, footer {
 				text-align: center;
 			}
 		</style>
@@ -20,7 +24,12 @@
 		<script src="js/applet.js"></script>
  	</head>
 	<body>
-		<div id="sim"></div>
+		<header>
+			<h1>Thermal Conductivity Simulation</h1>
+		</header>
+		<main>
+			<div id="sim"></div>
+		</main>
 		<footer>
 			<small>&copy; Jason R. Carrete</small>
 		</footer>
