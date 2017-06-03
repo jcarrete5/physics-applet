@@ -1,0 +1,36 @@
+body {
+	font-family: sans-serif;
+}
+
+header, footer {
+	text-align: center;
+}
+
+main {
+	display: flex;
+	justify-content: center;
+}
+
+aside {
+	width: 25%;
+	margin-left: 3%;
+}
+
+div.sync-option {
+	font-size: smaller;
+	margin: 20px auto;
+}
+
+div.sync-option>input[type="number"] {
+	float: right;
+	width: 7em;
+}
+
+div.sync-option>input[type="range"] {
+	width: 100%;
+	margin-top: 10px;
+}
+
+.variable {
+	font-style: italic;
+}
