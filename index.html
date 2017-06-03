@@ -23,6 +23,15 @@
 				width: 25%;
 				margin-left: 3%;
 			}
+
+			div.option>input[type="number"] {
+				float: right;
+				width: 7em;
+			}
+
+			div.option>input[type="range"] {
+				width: 100%;
+			}
 		</style>
 		<script src="js/p5.js"></script>
 		<script src="js/p5.dom.js"></script>
@@ -36,14 +45,17 @@
 		<main>
 			<div id="sim"></div>
 			<aside>
-				<h2>Controls</h2>
-				<h4>Changeable variables might go here</h4>
-				<ul>
-					<li>var1</li>
-					<li>var2</li>
-					<li>var3</li>
-					<li>var4</li>
-				</ul>
+				<h2>Options</h2>
+				<div class="option">
+					<label for="fluid_density_range">Fluid Density</label>
+					<input id="fluid_density" type="number">
+					<input id="fluid_density_range" type="range">
+				</div>
+				<div class="option">
+					<label for="gravity">Gravitational Field Strength</label>
+					<input id="gravity" type="number" min="1" max="23", value="9.8" step="0.1">
+					<input id="gravity_range" type="range" min="1" max="23" value="9.8" step="0.1">
+				</div>
 			</aside>
 		</main>
 		<footer>
