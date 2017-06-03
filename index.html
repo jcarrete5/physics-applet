@@ -24,15 +24,22 @@
 				margin-left: 3%;
 			}
 
-			div.option>input[type="number"] {
+			div.sync-option {
+				font-size: smaller;
+				margin: 20px auto;
+			}
+
+			div.sync-option>input[type="number"] {
 				float: right;
 				width: 7em;
 			}
 
-			div.option>input[type="range"] {
+			div.sync-option>input[type="range"] {
 				width: 100%;
+				margin-top: 10px;
 			}
 		</style>
+		<script src="js/sync-fields.js"></script>
 		<script src="js/p5.js"></script>
 		<script src="js/p5.dom.js"></script>
 		<script src="js/p5.sound.js"></script>
@@ -46,13 +53,17 @@
 			<div id="sim"></div>
 			<aside>
 				<h2>Options</h2>
-				<div class="option">
-					<label for="fluid_density_range">Fluid Density</label>
-					<input id="fluid_density" type="number">
-					<input id="fluid_density_range" type="range">
+				<div class="sync-option">
+					<label for="fluid_density_range">
+						Fluid Density
+					</label>
+					<input id="fluid_density" type="number" min="800" max="2000" value="1000" step="1">
+					<input id="fluid_density_range" type="range" min="800" max="2000" value="1000" step="1">
 				</div>
-				<div class="option">
-					<label for="gravity">Gravitational Field Strength</label>
+				<div class="sync-option">
+					<label for="gravity">
+						Gravitational Field Strength
+					</label>
 					<input id="gravity" type="number" min="1" max="23", value="9.8" step="0.1">
 					<input id="gravity_range" type="range" min="1" max="23" value="9.8" step="0.1">
 				</div>
