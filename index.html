@@ -10,12 +10,18 @@
 				font-family: sans-serif;
 			}
 
-			#sim {
-				display: inline-block;
+			header, footer {
+				text-align: center;
 			}
 
-			header, main, footer {
-				text-align: center;
+			main {
+				display: flex;
+				justify-content: center;
+			}
+
+			aside {
+				width: 25%;
+				margin-left: 3%;
 			}
 		</style>
 		<script src="js/p5.js"></script>
@@ -29,6 +35,16 @@
 		</header>
 		<main>
 			<div id="sim"></div>
+			<aside>
+				<h2>Controls</h2>
+				<h4>Changeable variables might go here</h4>
+				<ul>
+					<li>var1</li>
+					<li>var2</li>
+					<li>var3</li>
+					<li>var4</li>
+				</ul>
+			</aside>
 		</main>
 		<footer>
 			<small>&copy; Jason R. Carrete</small>
