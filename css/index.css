@@ -38,3 +38,8 @@ div.sync-option>input[type="range"] {
 .variable {
 	font-style: italic;
 }
+
+.vector {
+	font-style: italic;
+	font-weight: bold;
+}
