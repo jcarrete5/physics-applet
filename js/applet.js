@@ -16,6 +16,11 @@ var sketch = new p5(function(p) {
 		}
 	}
 
+	function Cube() {
+		this.pos = p.createVector();
+		this.velocity = p.createVector();
+	}
+
 	var tank;
 
 	p.setup = function() {
