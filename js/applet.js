@@ -18,6 +18,7 @@ var sketch = new p5(function(p) {
 		this.draw = function() {
 			p.push();
 			p.fill(p.color(0, 140, 184, 128));
+			p.stroke('black');
 			p.beginShape();
 			p.vertex(this.pos.x / meterPerPx, this.pos.y / meterPerPx);
 			p.vertex(this.pos.x / meterPerPx, (this.pos.y + this.height) / meterPerPx);
@@ -69,6 +70,9 @@ var sketch = new p5(function(p) {
 		var cnv = p.createCanvas(800, 600);
 		tank = new Tank();
 		cube = new Cube();
+		document.getElementById('reset').onclick = function() {
+			cube = new Cube();
+		}
 	}
 
 	var lastTime = Date.now();
