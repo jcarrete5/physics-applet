@@ -1,4 +1,5 @@
 var sketch = new p5(function(p) {
+	var meterPerPx = 1/10;
 	var tank;
 	var cube;
 
@@ -10,32 +11,33 @@ var sketch = new p5(function(p) {
 
 	function Tank() {
 		// top-left corner of tank
-		this.pos = p.createVector(30, p.height / 2);
-		this.width = p.width - 60;
-		this.height = p.height / 2 - 10;
+		this.pos = p.createVector(30 * meterPerPx, (p.height / 2) * meterPerPx);
+		this.width = (p.width - 60) * meterPerPx;
+		this.height = (p.height / 2 - 10) * meterPerPx;
 
 		this.draw = function() {
 			p.push();
 			p.fill(p.color(0, 140, 184, 128));
 			p.beginShape();
-			p.vertex(this.pos.x, this.pos.y);
-			p.vertex(this.pos.x, this.pos.y + this.height);
-			p.vertex(this.pos.x + this.width, this.pos.y + this.height);
-			p.vertex(this.pos.x + this.width, this.pos.y);
+			p.vertex(this.pos.x / meterPerPx, this.pos.y / meterPerPx);
+			p.vertex(this.pos.x / meterPerPx, (this.pos.y + this.height) / meterPerPx);
+			p.vertex((this.pos.x + this.width) / meterPerPx, (this.pos.y + this.height) / meterPerPx);
+			p.vertex((this.pos.x + this.width) / meterPerPx, this.pos.y / meterPerPx);
 			p.endShape();
 			p.pop();
 		}
 	}
 
 	function Cube() {
-		this.netForce = p.createVector();
-		this.sideLen = 20;
-		var pxPerMeter = 15;
+		this.sideLen = p.pow(fetchValue('volume'), 1/3); // in meters
+
 		// Center <x, y> of the cube
 		this.pos = p.createVector(tank.pos.x + tank.width / 2, tank.pos.y);
+		this.vel = p.createVector();
+		this.acc = p.createVector();
 
-		this.applyForce = function(force) {
-			netForce.add(force);
+		this.applyForce = function(force, vars) {
+			this.acc.add(force.mult(vars.mass));
 		}
 
 		this.draw = function() {
@@ -43,18 +45,23 @@ var sketch = new p5(function(p) {
 			p.fill('#493c21');
 			p.stroke('black');
 			p.strokeWeight(1);
-			let scaledSide = this.sideLen * pxPerMeter;
-			p.rect(this.pos.x - scaledSide / 2, this.pos.y - scaledSide / 2, scaledSide, scaledSide);
+			p.rect((this.pos.x - this.sideLen / 2) / meterPerPx, (this.pos.y - this.sideLen / 2) / meterPerPx, this.sideLen / meterPerPx, this.sideLen / meterPerPx);
 			p.pop();
 		}
 
 		this.update = function(dTime, vars) {
 			this.sideLen = p.pow(vars.volume, 1/3);
 
+			// Bound cube position to the bottom of the tank
+			if (this.pos.y + this.sideLen / 2 > tank.pos.y + tank.height) {
+				this.vel.set(0, 0);
+				this.acc.set(0, 0);
+				this.pos.y = tank.pos.y + tank.height - this.sideLen / 2;
+			}
+
 			// Update position
-			let displacement = p5.Vector.mult(this.netForce, p.sq(dTime) / vars.mass);
-			this.pos.add(displacement);
-			this.netForce.set(0, 0);
+			this.vel.add(p5.Vector.mult(this.acc, dTime));
+			this.pos.add(p5.Vector.mult(this.vel, dTime));
 		}
 	}
 
@@ -77,7 +84,7 @@ var sketch = new p5(function(p) {
 
 		p.background('#bef5ff');
 
-		// cube.applyForce
+		cube.applyForce(p.createVector(0, vars.g * vars.mass), vars);
 		cube.update(dTime, vars);
 		cube.draw();
 
