@@ -71,7 +71,7 @@ var sketch = new p5(function(p) {
 		}
 	}
 
-	function calcDrag() {
+	function calcDrag(vars) {
 		return p.createVector(0, -5 * cube.vel.y);
 	}
 
@@ -111,7 +111,7 @@ var sketch = new p5(function(p) {
 
 		cube.applyForce(p.createVector(0, vars.g * vars.mass), vars);
 		cube.applyForce(calcBuoyancy(vars), vars);
-		cube.applyForce(calcDrag(), vars);
+		cube.applyForce(calcDrag(vars), vars);
 		cube.update(dTime, vars);
 		cube.draw();
 
