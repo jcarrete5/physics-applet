@@ -33,7 +33,7 @@ var sketch = new p5(function(p) {
 		this.sideLen = p.pow(fetchValue('volume'), 1/3); // in meters
 
 		// Center <x, y> of the cube
-		this.pos = p.createVector(tank.pos.x + tank.width / 2, tank.pos.y);
+		this.pos = p.createVector(tank.pos.x + tank.width / 2, tank.pos.y + 3);
 		this.vel = p.createVector();
 		this.acc = p.createVector();
 
@@ -58,7 +58,7 @@ var sketch = new p5(function(p) {
 			this.sideLen = p.pow(vars.volume, 1/3);
 
 			// Bound cube position to the bottom of the tank
-			if (this.pos.y + this.sideLen / 2 > tank.pos.y + tank.height) {
+			if (this.pos.y + this.sideLen / 2 >= tank.pos.y + tank.height) {
 				this.vel.set(0, 0);
 				this.acc.set(0, 0);
 				this.pos.y = tank.pos.y + tank.height - this.sideLen / 2;
@@ -71,9 +71,6 @@ var sketch = new p5(function(p) {
 	}
 
 	function calcBuoyancy(vars) {
-		// if (cube.isSubmerged(tank)) {
-		//
-		// }
 		let height = (cube.pos.y + cube.sideLen / 2) - tank.pos.y;
 		if (height > cube.sideLen) {
 			height = cube.sideLen;
@@ -82,8 +79,6 @@ var sketch = new p5(function(p) {
 		}
 		let displaced = p.sq(cube.sideLen) * height;
 		let buoyancy = vars.rho * vars.g * displaced;
-		// buoyancy = 5;
-		console.log(displaced);
 		return p.createVector(0, -buoyancy);
 	}
 
