@@ -57,17 +57,22 @@ var sketch = new p5(function(p) {
 		this.update = function(dTime, vars) {
 			this.sideLen = p.pow(vars.volume, 1/3);
 
+			// Update position
+			this.vel.add(p5.Vector.mult(this.acc, dTime));
+			this.acc.set(0, 0);
+			this.pos.add(p5.Vector.mult(this.vel, dTime));
+
 			// Bound cube position to the bottom of the tank
 			if (this.pos.y + this.sideLen / 2 >= tank.pos.y + tank.height) {
 				this.vel.set(0, 0);
 				this.acc.set(0, 0);
 				this.pos.y = tank.pos.y + tank.height - this.sideLen / 2;
 			}
-
-			// Update position
-			this.vel.add(p5.Vector.mult(this.acc, dTime));
-			this.pos.add(p5.Vector.mult(this.vel, dTime));
 		}
+	}
+
+	function calcDrag() {
+		return p.createVector(0, -5 * cube.vel.y);
 	}
 
 	function calcBuoyancy(vars) {
@@ -106,6 +111,7 @@ var sketch = new p5(function(p) {
 
 		cube.applyForce(p.createVector(0, vars.g * vars.mass), vars);
 		cube.applyForce(calcBuoyancy(vars), vars);
+		cube.applyForce(calcDrag(), vars);
 		cube.update(dTime, vars);
 		cube.draw();
 
