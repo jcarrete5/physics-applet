@@ -1,5 +1,5 @@
 var sketch = new p5(function(p) {
-	var meterPerPx = 1/10;
+	var meterPerPx = 1/15;
 	var tank;
 	var cube;
 
@@ -38,7 +38,11 @@ var sketch = new p5(function(p) {
 		this.acc = p.createVector();
 
 		this.applyForce = function(force, vars) {
-			this.acc.add(force.mult(vars.mass));
+			this.acc.add(force.mult(1 / vars.mass));
+		}
+
+		this.isSubmerged = function(tank) {
+			return this.pos.y - this.sideLen / 2 >= tank.pos.y;
 		}
 
 		this.draw = function() {
@@ -66,6 +70,23 @@ var sketch = new p5(function(p) {
 		}
 	}
 
+	function calcBuoyancy(vars) {
+		// if (cube.isSubmerged(tank)) {
+		//
+		// }
+		let height = (cube.pos.y + cube.sideLen / 2) - tank.pos.y;
+		if (height > cube.sideLen) {
+			height = cube.sideLen;
+		} else if(height <= 0) {
+			height = 0;
+		}
+		let displaced = p.sq(cube.sideLen) * height;
+		let buoyancy = vars.rho * vars.g * displaced;
+		// buoyancy = 5;
+		console.log(displaced);
+		return p.createVector(0, -buoyancy);
+	}
+
 	p.setup = function() {
 		var cnv = p.createCanvas(800, 600);
 		tank = new Tank();
@@ -89,6 +110,7 @@ var sketch = new p5(function(p) {
 		p.background('#bef5ff');
 
 		cube.applyForce(p.createVector(0, vars.g * vars.mass), vars);
+		cube.applyForce(calcBuoyancy(vars), vars);
 		cube.update(dTime, vars);
 		cube.draw();
 
